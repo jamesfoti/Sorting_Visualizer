@@ -142,9 +142,12 @@ public class SortingVisualizer : MonoBehaviour {
 
         for (i = 0; i < unsortedList.Length - 1; i++) {
             swapped = false;
-            yield return new WaitForSeconds(sortingSpeed); // Delay for 1 second
+            yield return new WaitForSeconds(sortingSpeed); 
+
             for (j = 0; j < unsortedList.Length - i - 1; j++) {
-                LeanTween.color(unsortedList[j], Color.green, sortingSpeed); // Turn sorted items green
+                LeanTween.color(unsortedList[j], Color.green, sortingSpeed);
+                LeanTween.color(unsortedList[j + 1], Color.green, sortingSpeed);
+
                 if (unsortedList[j].transform.localScale.y > unsortedList[j + 1].transform.localScale.y) {
                     yield return new WaitForSeconds(sortingSpeed);
                     // swap arr[j] and arr[j+1] 
@@ -158,39 +161,29 @@ public class SortingVisualizer : MonoBehaviour {
                     LeanTween.moveLocalX(unsortedList[j], unsortedList[j + 1].transform.localPosition.x, sortingSpeed);
                     LeanTween.moveLocalZ(unsortedList[j], -3f, sortingSpeed / 2f).setLoopPingPong(1);
 
-                    
                     LeanTween.moveLocalX(unsortedList[j + 1], tempPosition.x, sortingSpeed);
                     LeanTween.moveLocalZ(unsortedList[j + 1], 3f, sortingSpeed / 2f).setLoopPingPong(1);
+
                     yield return new WaitForSeconds(sortingSpeed);
-
                     LeanTween.color(unsortedList[j], Color.white, sortingSpeed);
-                    //LeanTween.color(unsortedList[j+1], Color.white, sortingSpeed);
-
-                    /*
-                     * 
-                    temp = unsortedList[i];
-                    unsortedList[i] = unsortedList[min];
-                    unsortedList[min] = temp;
-
-                    tempPosition = unsortedList[i].transform.localPosition;
-
-                    LeanTween.moveLocalX(unsortedList[i], unsortedList[min].transform.localPosition.x, sortingSpeed);
-                    LeanTween.moveLocalZ(unsortedList[i], -3, sortingSpeed / 2f).setLoopPingPong(1);
-
-
-                    LeanTween.moveLocalX(unsortedList[min], tempPosition.x, sortingSpeed);
-                    LeanTween.moveLocalZ(unsortedList[min], 3, sortingSpeed / 2f).setLoopPingPong(1);
-                     */
+                    
 
                     swapped = true;
                 }
+                else {
+                    LeanTween.color(unsortedList[j], Color.white, sortingSpeed);
+                }
+                if (j + 1 == unsortedList.Length - i - 1)
+                    LeanTween.color(unsortedList[unsortedList.Length - i - 1], Color.green, sortingSpeed);
             }
 
             // IF no two elements were  
             // swapped by inner loop, then break 
-            if (swapped == false)
-
+            if (swapped == false) {
                 break;
+            }
+        
+
         }
 
     }
