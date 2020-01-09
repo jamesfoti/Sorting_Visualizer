@@ -8,8 +8,10 @@ public class SortingVisualizer : MonoBehaviour {
     public int numberOfCubes = 10;
     public int cubeHeightMax = 10;
     public GameObject[] cubes;
-    public Slider slider;
+    public Slider sizeSlider;
+    public Slider speedSlider;
     public Button[] sortOptionButtons;
+    private float sortingSpeed;
 
     private bool selectionSort = false;
 
@@ -22,7 +24,7 @@ public class SortingVisualizer : MonoBehaviour {
         // Delete if already initialized
         ResetArray();
 
-        numberOfCubes = (int)slider.value;
+        numberOfCubes = (int)sizeSlider.value;
         cubes = new GameObject[numberOfCubes];
         
         for (int i = 0; i < numberOfCubes; i++) {
@@ -51,6 +53,8 @@ public class SortingVisualizer : MonoBehaviour {
     }
 
     public void Sort() {
+        sortingSpeed = Mathf.Abs(speedSlider.value - 1f);
+
         if (selectionSort) {
             StartCoroutine(SelectionSort(cubes));
         }
@@ -69,16 +73,19 @@ public class SortingVisualizer : MonoBehaviour {
         Vector3 tempPosition;
 
         for (int i = 0; i < unsortedList.Length; i++) {
+            LeanTween.color(unsortedList[i], Color.blue, sortingSpeed);
             min = i;
-            yield return new WaitForSeconds(1); // Delay for 1 second
+            yield return new WaitForSeconds(sortingSpeed); // Delay for 1 second
             for (int j = i + 1; j < unsortedList.Length; j++) {
-                
+                LeanTween.color(unsortedList[j], Color.red, sortingSpeed);
+                yield return new WaitForSeconds(sortingSpeed);
+                LeanTween.color(unsortedList[j], Color.white, sortingSpeed);
                 if (unsortedList[j].transform.localScale.y < unsortedList[min].transform.localScale.y) {
                     min = j;
                 }
             }
             if (min != i) {
-                yield return new WaitForSeconds(1f); // Experiment with this!
+                yield return new WaitForSeconds(sortingSpeed); // Experiment with this!
 
                 temp = unsortedList[i];
                 unsortedList[i] = unsortedList[min];
@@ -92,15 +99,18 @@ public class SortingVisualizer : MonoBehaviour {
                  * unsortedList[min].transform.localPosition = new Vector3(tempPosition.x, unsortedList[min].transform.localPosition.y, unsortedList[min].transform.localPosition.z);
                 */
                 
-                LeanTween.moveLocalX(unsortedList[i], unsortedList[min].transform.localPosition.x, 1);
-                LeanTween.moveLocalZ(unsortedList[i], -3, .5f).setLoopPingPong(1);
+                LeanTween.moveLocalX(unsortedList[i], unsortedList[min].transform.localPosition.x, sortingSpeed);
+                LeanTween.moveLocalZ(unsortedList[i], -3, sortingSpeed / 2f).setLoopPingPong(1);
 
-                LeanTween.moveLocalX(unsortedList[min], tempPosition.x, 1);
-                LeanTween.moveLocalZ(unsortedList[min], 3, .5f).setLoopPingPong(1);
+
+                LeanTween.moveLocalX(unsortedList[min], tempPosition.x, sortingSpeed);
+                LeanTween.moveLocalZ(unsortedList[min], 3, sortingSpeed / 2f).setLoopPingPong(1);
+                LeanTween.color(unsortedList[min], Color.white, sortingSpeed);
+
             }
-
-            LeanTween.color(unsortedList[i], Color.green, 1f);
+            LeanTween.color(unsortedList[i], Color.green, sortingSpeed); // Turn sorted items green
             
+
         }
         
     }
