@@ -53,13 +53,22 @@ public class SortingVisualizer : MonoBehaviour {
     }
 
     public void Sort() {
-        sortingSpeed = Mathf.Abs(speedSlider.value - 1f);
+        sortingSpeed = Mathf.Abs(speedSlider.value - 1f); // Slider values: .01 to 1.01
 
         if (selectionSort) {
             StartCoroutine(SelectionSort(cubes));
         }
         selectionSort = false;
         sortOptionButtons[0].interactable = true;
+    }
+
+    public void Pause() {
+        Time.timeScale = 0f;
+    }
+
+    public void Resume() {
+        Time.timeScale = 1f;
+        sortingSpeed = Mathf.Abs(speedSlider.value - 1f); // Slider values: .01 to 1.01
     }
 
     public void ChooseSelectionSort() {
