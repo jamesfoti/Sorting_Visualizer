@@ -80,6 +80,11 @@ public class SortingVisualizer : MonoBehaviour {
         pausePanel.SetActive(false);
     }
 
+    public void ExitProgram() {
+        Debug.Log("Eixt Program");
+        Application.Quit();
+    }
+
     public void ChooseSelectionSort() {
         selectionSort = true;
         sortOptionButtons[0].interactable = false;
