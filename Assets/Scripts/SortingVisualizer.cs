@@ -11,8 +11,9 @@ public class SortingVisualizer : MonoBehaviour {
     public Slider sizeSlider;
     public Slider speedSlider;
     public Button[] sortOptionButtons;
-    private float sortingSpeed;
+    public GameObject pausePanel;
 
+    private float sortingSpeed;
     private bool selectionSort = false;
     private bool bubbleSort = false;
 
@@ -21,9 +22,12 @@ public class SortingVisualizer : MonoBehaviour {
         //StartCoroutine(SelectionSort(cubes));
     }
 
-    public void GenerateRandomArray() {
-        // Delete if already initialized
-        ResetArray();
+    private void Update() {
+        sortingSpeed = Mathf.Abs(speedSlider.value - 1f);
+    }
+
+    public void GenerateRandomArray() {      
+        ResetArray(); // Delete if an array already exists
 
         numberOfCubes = (int)sizeSlider.value;
         cubes = new GameObject[numberOfCubes];
@@ -54,8 +58,6 @@ public class SortingVisualizer : MonoBehaviour {
     }
 
     public void Sort() {
-        sortingSpeed = Mathf.Abs(speedSlider.value - 1f); // Slider values: .01 to 1.01
-
         if (selectionSort) {
             StartCoroutine(SelectionSort(cubes));
         }
@@ -70,11 +72,12 @@ public class SortingVisualizer : MonoBehaviour {
 
     public void Pause() {
         Time.timeScale = 0f;
+        pausePanel.SetActive(true);
     }
 
     public void Resume() {
         Time.timeScale = 1f;
-        sortingSpeed = Mathf.Abs(speedSlider.value - 1f); // Slider values: .01 to 1.01
+        pausePanel.SetActive(false);
     }
 
     public void ChooseSelectionSort() {
@@ -82,7 +85,21 @@ public class SortingVisualizer : MonoBehaviour {
         sortOptionButtons[0].interactable = false;
     }
 
-    private IEnumerator SelectionSort(GameObject[] unsortedList) {
+    private void DeactivateSortButtons() {
+        for (int i = 0; i < sortOptionButtons.Length; i++) {
+            sortOptionButtons[i].interactable = false;
+        }
+    }
+
+    public void ActivateSortButtons() {
+        for (int i = 0; i < sortOptionButtons.Length; i++) {
+            sortOptionButtons[i].interactable = true;
+        }
+    }
+
+    public IEnumerator SelectionSort(GameObject[] unsortedList) {
+        DeactivateSortButtons();
+
         int min;
         GameObject temp;
         Vector3 tempPosition;
@@ -127,6 +144,7 @@ public class SortingVisualizer : MonoBehaviour {
             }
             LeanTween.color(unsortedList[i], Color.green, sortingSpeed); // Turn sorted items green
         }
+        ActivateSortButtons();
     }
     public void ChooseBubbleSort() {
         bubbleSort = true;
@@ -135,6 +153,8 @@ public class SortingVisualizer : MonoBehaviour {
 
 
     private IEnumerator BubbleSort(GameObject[] unsortedList) {
+        DeactivateSortButtons();
+
         int i, j;
         GameObject temp;
         Vector3 tempPosition;
@@ -182,7 +202,10 @@ public class SortingVisualizer : MonoBehaviour {
             if (swapped == false) {
                 break;
             }
-        
+
+        ActivateSortButtons();
+
+
 
         }
 
