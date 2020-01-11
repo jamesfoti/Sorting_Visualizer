@@ -210,5 +210,6 @@ public class SortingVisualizer : MonoBehaviour {
         ActivateSortButtons();
         ChangeDisabledButtonColorToGrey(1);
     }
-           
+
+
 }
