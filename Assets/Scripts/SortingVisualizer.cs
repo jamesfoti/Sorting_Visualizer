@@ -19,7 +19,6 @@ public class SortingVisualizer : MonoBehaviour {
 
     private void Start() {
         GenerateRandomArray();
-        //StartCoroutine(SelectionSort(cubes));
     }
 
     private void Update() {
@@ -158,31 +157,25 @@ public class SortingVisualizer : MonoBehaviour {
 
 
     private IEnumerator BubbleSort(GameObject[] unsortedList) {
-        DeactivateSortButtons();
-
-        int i, j;
         GameObject temp;
         Vector3 tempPosition;
-        bool swapped;
+  
+        for (int i = 0; i < unsortedList.Length - 1; i++) {
+            yield return new WaitForSeconds(sortingSpeed);
 
-        for (i = 0; i < unsortedList.Length - 1; i++) {
-            swapped = false;
-            yield return new WaitForSeconds(sortingSpeed); 
-
-            for (j = 0; j < unsortedList.Length - i - 1; j++) {
-                LeanTween.color(unsortedList[j], Color.green, sortingSpeed);
-                LeanTween.color(unsortedList[j + 1], Color.green, sortingSpeed);
+            for (int j = 0; j < unsortedList.Length - i - 1; j++) {
+                LeanTween.color(unsortedList[j], Color.red, sortingSpeed);
+                LeanTween.color(unsortedList[j + 1], Color.red, sortingSpeed);
+                yield return new WaitForSeconds(sortingSpeed);
 
                 if (unsortedList[j].transform.localScale.y > unsortedList[j + 1].transform.localScale.y) {
-                    yield return new WaitForSeconds(sortingSpeed);
-                    // swap arr[j] and arr[j+1] 
+                    // swap unsortedList[j] and unsortedList[j+1] 
                     temp = unsortedList[j];
                     unsortedList[j] = unsortedList[j + 1];
                     unsortedList[j + 1] = temp;
 
                     tempPosition = unsortedList[j].transform.localPosition;
 
-                    
                     LeanTween.moveLocalX(unsortedList[j], unsortedList[j + 1].transform.localPosition.x, sortingSpeed);
                     LeanTween.moveLocalZ(unsortedList[j], -3f, sortingSpeed / 2f).setLoopPingPong(1);
 
@@ -190,30 +183,15 @@ public class SortingVisualizer : MonoBehaviour {
                     LeanTween.moveLocalZ(unsortedList[j + 1], 3f, sortingSpeed / 2f).setLoopPingPong(1);
 
                     yield return new WaitForSeconds(sortingSpeed);
-                    LeanTween.color(unsortedList[j], Color.white, sortingSpeed);
-                    
-
-                    swapped = true;
                 }
-                else {
-                    LeanTween.color(unsortedList[j], Color.white, sortingSpeed);
-                }
-                if (j + 1 == unsortedList.Length - i - 1)
-                    LeanTween.color(unsortedList[unsortedList.Length - i - 1], Color.green, sortingSpeed);
+
+                LeanTween.color(unsortedList[j], Color.white, sortingSpeed);
+                LeanTween.color(unsortedList[j+1], Color.white, sortingSpeed);
             }
-
-            // IF no two elements were  
-            // swapped by inner loop, then break 
-            if (swapped == false) {
-                break;
-            }
-
-        ActivateSortButtons();
-
-
-
+            LeanTween.color(unsortedList[unsortedList.Length - 1 - i], Color.green, sortingSpeed);
         }
-
+        yield return new WaitForSeconds(sortingSpeed);
+        LeanTween.color(unsortedList[0], Color.green, sortingSpeed);
     }
            
 }
