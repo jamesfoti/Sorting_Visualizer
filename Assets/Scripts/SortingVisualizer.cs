@@ -14,8 +14,7 @@ public class SortingVisualizer : MonoBehaviour {
     public GameObject pausePanel;
 
     private float sortingSpeed;
-    private bool selectionSort = false;
-    private bool bubbleSort = false;
+    
 
     private void Start() {
         GenerateRandomArray();
@@ -25,9 +24,10 @@ public class SortingVisualizer : MonoBehaviour {
         sortingSpeed = Mathf.Abs(speedSlider.value - 1f);
     }
 
-    public void GenerateRandomArray() {      
-        ResetArray(); // Delete if an array already exists
-
+    public void GenerateRandomArray() {
+        Debug.Log("Generate Random Array");
+        ResetProgram();
+        
         numberOfCubes = (int)sizeSlider.value;
         cubes = new GameObject[numberOfCubes];
         
@@ -47,34 +47,47 @@ public class SortingVisualizer : MonoBehaviour {
         transform.position = new Vector3(-numberOfCubes / 3.5f, -cubeHeightMax / 2f, 0);
     }
 
-    public void ResetArray() {
+    public void ResetProgram() {
+        Debug.Log("Reset");
+
+        // Destroys previous array of cubes
         for (int i = 0; i < cubes.Length; i++) {
             if (cubes[i] != null) {
                 Destroy(cubes[i]);
             }
         }
         transform.position = new Vector3(0, 0, 0); // Reset position of Cubes gameObject
+
+        ActivateSortButtons(); // Reactivate buttons
+
+        // Changes disable color back to grey for all buttons
+        for (int i = 0; i < sortOptionButtons.Length; i++) {
+            ChangeDisabledButtonColorToGrey(i);
+        }
     }
 
-    public void Sort() {
-        if (selectionSort) {
-            StartCoroutine(SelectionSort(cubes));
-        }
-        else if (bubbleSort) {
-            StartCoroutine(BubbleSort(cubes));
-        }
-        selectionSort = false;
-        bubbleSort = false;
-        sortOptionButtons[0].interactable = true;
-        sortOptionButtons[1].interactable = true;
+    public void SelectionSort() {      
+        Debug.Log("Selection Sort Chosen!");       
+        DeactivateSortButtons();
+        ChangeDisabledButtonColorToGreen(0);
+        StartCoroutine(SelectionSort(cubes));
+    }
+
+    public void BubbleSort() {      
+        Debug.Log("Bubble Sort Chosen!");    
+        DeactivateSortButtons();
+        ChangeDisabledButtonColorToGreen(1);
+        StartCoroutine(BubbleSort(cubes));
     }
 
     public void Pause() {
+        Debug.Log("Pause");
         Time.timeScale = 0f;
         pausePanel.SetActive(true);
     }
 
     public void Resume() {
+        Debug.Log("Resume");
         Time.timeScale = 1f;
         pausePanel.SetActive(false);
     }
@@ -82,11 +95,6 @@ public class SortingVisualizer : MonoBehaviour {
     public void ExitProgram() {
         Debug.Log("Eixt Program");
         Application.Quit();
-    }
-
-    public void ChooseSelectionSort() {
-        selectionSort = true;
-        sortOptionButtons[0].interactable = false;
     }
 
     private void DeactivateSortButtons() {
@@ -101,9 +109,19 @@ public class SortingVisualizer : MonoBehaviour {
         }
     }
 
-    public IEnumerator SelectionSort(GameObject[] unsortedList) {
-        DeactivateSortButtons();
+    private void ChangeDisabledButtonColorToGreen(int buttonIndex) {
+        var newColorBlock = sortOptionButtons[buttonIndex].colors;
+        newColorBlock.disabledColor = Color.green;
+        sortOptionButtons[buttonIndex].colors = newColorBlock;
+    }
 
+    private void ChangeDisabledButtonColorToGrey(int buttonIndex) {
+        var newColorBlock = sortOptionButtons[buttonIndex].colors;
+        newColorBlock.disabledColor = Color.grey;
+        sortOptionButtons[buttonIndex].colors = newColorBlock;
+    }
+
+    private IEnumerator SelectionSort(GameObject[] unsortedList) {
         int min;
         GameObject temp;
         Vector3 tempPosition;
@@ -149,13 +167,9 @@ public class SortingVisualizer : MonoBehaviour {
             LeanTween.color(unsortedList[i], Color.green, sortingSpeed); // Turn sorted items green
         }
         ActivateSortButtons();
+        ChangeDisabledButtonColorToGrey(0);
     }
-    public void ChooseBubbleSort() {
-        bubbleSort = true;
-        sortOptionButtons[1].interactable = false;
-    }
-
-
+    
     private IEnumerator BubbleSort(GameObject[] unsortedList) {
         GameObject temp;
         Vector3 tempPosition;
@@ -192,6 +206,9 @@ public class SortingVisualizer : MonoBehaviour {
         }
         yield return new WaitForSeconds(sortingSpeed);
         LeanTween.color(unsortedList[0], Color.green, sortingSpeed);
+
+        ActivateSortButtons();
+        ChangeDisabledButtonColorToGrey(1);
     }
            
 }
