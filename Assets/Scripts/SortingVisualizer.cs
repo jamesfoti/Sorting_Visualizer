@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SortingVisualizer : MonoBehaviour {
 
-    public int numberOfCubes = 10;
+    public int numberOfCubes;
     public int cubeHeightMax = 10;
     public GameObject[] cubes;
     public Slider sizeSlider;
@@ -38,9 +38,8 @@ public class SortingVisualizer : MonoBehaviour {
             GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
             cube.transform.localScale = new Vector3(.5f, randomNumber, .5f);
             cube.transform.position = new Vector3(i*.6f, randomNumber / 2f, 0);
-
             cube.transform.parent = this.transform; // Cubes = parent
-
+            
             cubes[i] = cube;
         }
         // Experiment with the x values of Cubes.position based off the x-scale and x-position of each cube[i]!
