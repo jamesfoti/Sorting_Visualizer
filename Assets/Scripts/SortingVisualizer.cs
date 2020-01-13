@@ -14,11 +14,6 @@ public class SortingVisualizer : MonoBehaviour {
 
     private float sortingSpeed;
 
-
-    private void Awake() {
-        //Screen.fullScreen = false;
-    }
-
     private void Start() {
         GenerateRandomArray();
     }
