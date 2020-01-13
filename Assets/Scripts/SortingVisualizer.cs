@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SortingVisualizer : MonoBehaviour {
-
     public int numberOfCubes;
     public int cubeHeightMax = 10;
     public GameObject[] cubes;
@@ -14,7 +13,11 @@ public class SortingVisualizer : MonoBehaviour {
     public GameObject pausePanel;
 
     private float sortingSpeed;
-    
+
+
+    private void Awake() {
+        //Screen.fullScreen = false;
+    }
 
     private void Start() {
         GenerateRandomArray();
