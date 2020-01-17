@@ -5,7 +5,7 @@
 ## Sources
 * Visualising Selection Sort by Dr. Shahin Rostami -> https://www.youtube.com/playlist?list=PLwWiU_ClpuYpp2-voD9On2eKvcOa27A7E 
 
-I started the project by following Dr. Rostami's tutorial on youtuube (link above). I expanded on his tutorial and I will continue to add more sorting algorithms and features to the application.  
+I started the project by following Dr. Rostami's tutorial on youtube (link above). I expanded on his tutorial and I will continue to add more sorting algorithms and features to the application.  
 
 Check out Dr Rostami's sites:
 * Youtube Channel: https://www.youtube.com/channel/UC3ThkhFr8PHy-97U3sEGW3Q
