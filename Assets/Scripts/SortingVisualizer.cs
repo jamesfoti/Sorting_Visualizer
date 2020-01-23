@@ -4,6 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SortingVisualizer : MonoBehaviour {
+    /* SOURCES:
+     * This project is heavily inspired and based off of Dr. Shahin Rostami's youtube tutorial (link below)
+     * Dr. Rostami's Youtube tutorial: https://www.youtube.com/playlist?list=PLwWiU_ClpuYpp2-voD9On2eKvcOa27A7E
+     * Dr. Rostami's website: http://shahinrostami.com
+     */
+
+    /* WISHLIST:
+     * 1) The UI for the different kind of sorting buttons are hard coded. I might just simply turn them into a dropdown menu.
+     * 2) More sorting algorithms to be implemented
+     */
+
     public GameObject[] cubes;
     public GameObject cubesParentGameObject;
     public Slider sizeSlider;
@@ -20,14 +31,14 @@ public class SortingVisualizer : MonoBehaviour {
     }
 
     private void Update() {
-        sortingSpeed = Mathf.Abs(speedSlider.value - 1f);
+        sortingSpeed = Mathf.Abs(speedSlider.value - 1f); // Sorting speed is based on UI slider
+        numberOfCubes = (int)sizeSlider.value; // Number of cubes is based on UI slider
     }
 
     public void GenerateRandomArray() {
         Debug.Log("Generate Random Array");
         ResetArray(); // Reset array incase one already exists before generating a new one!
         
-        numberOfCubes = (int)sizeSlider.value; // Number of cubes is based on UI slider
         cubes = new GameObject[numberOfCubes]; 
         
         for (int i = 0; i < numberOfCubes; i++) {
@@ -48,19 +59,17 @@ public class SortingVisualizer : MonoBehaviour {
     public void ResetArray() {
         Debug.Log("Reset Arrray");
 
-        // Destroys previous array of cubes
+        DestroyCubesArray(); // Destroys previous array of cubes
+        ActivateSortButtons(); // Reactivate buttons
+
+        cubesParentGameObject.transform.position = new Vector3(0, 0, 0); // Reset position of Cubes Parent gameObject
+    }
+
+    private void DestroyCubesArray() {
         for (int i = 0; i < cubes.Length; i++) {
             if (cubes[i] != null) {
                 Destroy(cubes[i]);
             }
-        }
-        cubesParentGameObject.transform.position = new Vector3(0, 0, 0); // Reset position of Cubes Parent gameObject
-
-        ActivateSortButtons(); // Reactivate buttons
-
-        // Changes disable color back to grey for all buttons
-        for (int i = 0; i < sortOptionButtons.Length; i++) {
-            ChangeDisabledButtonColorToGrey(i);
         }
     }
 
@@ -92,7 +101,6 @@ public class SortingVisualizer : MonoBehaviour {
 
     public void ResetProgram() {
         Debug.Log("Reset Program");
-        ResetArray();
         GenerateRandomArray();
     }
 
@@ -110,6 +118,7 @@ public class SortingVisualizer : MonoBehaviour {
     public void ActivateSortButtons() {
         for (int i = 0; i < sortOptionButtons.Length; i++) {
             sortOptionButtons[i].interactable = true;
+            ChangeDisabledButtonColorToGrey(i); // Changes disable color back to grey for all buttons
         }
     }
 
@@ -170,7 +179,6 @@ public class SortingVisualizer : MonoBehaviour {
             LeanTween.color(unsortedList[i], Color.green, sortingSpeed); // Turn sorted items green
         }
         ActivateSortButtons();
-        ChangeDisabledButtonColorToGrey(0);
     }
     
     private IEnumerator BubbleSort(GameObject[] unsortedList) {
@@ -211,7 +219,6 @@ public class SortingVisualizer : MonoBehaviour {
         LeanTween.color(unsortedList[0], Color.green, sortingSpeed);
 
         ActivateSortButtons();
-        ChangeDisabledButtonColorToGrey(1);
     }
 
 
