@@ -340,6 +340,57 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 757209004}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &86353945
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 86353947}
+  - component: {fileID: 86353946}
+  m_Layer: 0
+  m_Name: Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &86353946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 86353945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f1b0de703a5f3b4a95cedf663b6ce8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cubes: []
+  cubesParentGameObject: {fileID: 627746216}
+  sizeSlider: {fileID: 297588167}
+  speedSlider: {fileID: 789447931}
+  sortOptionButtons:
+  - {fileID: 277998150}
+  - {fileID: 1438809194}
+  pausePanel: {fileID: 1530050264}
+--- !u!4 &86353947
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 86353945}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.000015258789, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 757209004}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &135394409
@@ -734,7 +785,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 627746217}
+      - m_Target: {fileID: 86353946}
         m_MethodName: SelectionSort
         m_Mode: 1
         m_Arguments:
@@ -870,7 +921,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 627746217}
+      - m_Target: {fileID: 86353946}
         m_MethodName: GenerateRandomArray
         m_Mode: 1
         m_Arguments:
@@ -1036,7 +1087,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 627746217}
+      - m_Target: {fileID: 86353946}
         m_MethodName: Resume
         m_Mode: 1
         m_Arguments:
@@ -1520,7 +1571,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 627746218}
-  - component: {fileID: 627746217}
   m_Layer: 0
   m_Name: Cubes
   m_TagString: Untagged
@@ -1528,27 +1578,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &627746217
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 627746216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f1b0de703a5f3b4a95cedf663b6ce8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  numberOfCubes: 10
-  cubeHeightMax: 10
-  cubes: []
-  sizeSlider: {fileID: 297588167}
-  speedSlider: {fileID: 789447931}
-  sortOptionButtons:
-  - {fileID: 277998150}
-  - {fileID: 1438809194}
-  pausePanel: {fileID: 1530050264}
 --- !u!4 &627746218
 Transform:
   m_ObjectHideFlags: 0
@@ -1561,7 +1590,7 @@ Transform:
   m_LocalScale: {x: 0.351942, y: 0.351942, z: 0.351942}
   m_Children: []
   m_Father: {fileID: 757209004}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &655641019
 GameObject:
@@ -1725,7 +1754,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 757209004}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &713382097
 GameObject:
@@ -1827,11 +1856,12 @@ Transform:
   m_LocalPosition: {x: 2.4436598, y: 3.568387, z: -3.1799736}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 36476605}
   - {fileID: 963194228}
   - {fileID: 705507995}
   - {fileID: 627746218}
+  - {fileID: 86353947}
   - {fileID: 1788299913}
-  - {fileID: 36476605}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2544,7 +2574,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 627746217}
+      - m_Target: {fileID: 86353946}
         m_MethodName: ExitProgram
         m_Mode: 1
         m_Arguments:
@@ -2672,7 +2702,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 757209004}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1076407119
 GameObject:
@@ -2756,7 +2786,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 627746217}
+      - m_Target: {fileID: 86353946}
         m_MethodName: GenerateRandomArray
         m_Mode: 1
         m_Arguments:
@@ -2885,8 +2915,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 627746217}
-        m_MethodName: Resume
+      - m_Target: {fileID: 86353946}
+        m_MethodName: ResetProgram
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2896,9 +2926,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 627746217}
-        m_MethodName: GenerateRandomArray
-        m_Mode: 1
+      - m_Target: {fileID: 1997258174}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1530050264}
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3061,7 +3102,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 627746217}
+      - m_Target: {fileID: 86353946}
         m_MethodName: BubbleSort
         m_Mode: 1
         m_Arguments:
@@ -3277,7 +3318,7 @@ RectTransform:
   - {fileID: 1997258175}
   - {fileID: 1530050265}
   m_Father: {fileID: 757209004}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3366,7 +3407,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 627746217}
+      - m_Target: {fileID: 86353946}
         m_MethodName: Pause
         m_Mode: 1
         m_Arguments:

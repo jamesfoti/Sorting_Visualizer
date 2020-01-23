@@ -4,14 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SortingVisualizer : MonoBehaviour {
-    public int numberOfCubes;
-    public int cubeHeightMax = 10;
     public GameObject[] cubes;
+    public GameObject cubesParentGameObject;
     public Slider sizeSlider;
     public Slider speedSlider;
     public Button[] sortOptionButtons;
     public GameObject pausePanel;
 
+    private int numberOfCubes;
+    private int cubeHeightMax = 10;
     private float sortingSpeed;
 
     private void Start() {
@@ -24,10 +25,10 @@ public class SortingVisualizer : MonoBehaviour {
 
     public void GenerateRandomArray() {
         Debug.Log("Generate Random Array");
-        ResetProgram();
+        ResetArray(); // Reset array incase one already exists before generating a new one!
         
-        numberOfCubes = (int)sizeSlider.value;
-        cubes = new GameObject[numberOfCubes];
+        numberOfCubes = (int)sizeSlider.value; // Number of cubes is based on UI slider
+        cubes = new GameObject[numberOfCubes]; 
         
         for (int i = 0; i < numberOfCubes; i++) {
             int randomNumber = Random.Range(1, cubeHeightMax + 1);
@@ -36,16 +37,16 @@ public class SortingVisualizer : MonoBehaviour {
             GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
             cube.transform.localScale = new Vector3(.5f, randomNumber, .5f);
             cube.transform.position = new Vector3(i*.6f, randomNumber / 2f, 0);
-            cube.transform.parent = this.transform; // Cubes = parent
+            cube.transform.parent = cubesParentGameObject.transform; // Cubes = parent
             
             cubes[i] = cube;
         }
         // Experiment with the x values of Cubes.position based off the x-scale and x-position of each cube[i]!
-        transform.position = new Vector3(-numberOfCubes / 3.5f, -cubeHeightMax / 2f, 0);
+        cubesParentGameObject.transform.position = new Vector3(-numberOfCubes / 3.5f, -cubeHeightMax / 2f, 0);
     }
 
-    public void ResetProgram() {
-        Debug.Log("Reset");
+    public void ResetArray() {
+        Debug.Log("Reset Arrray");
 
         // Destroys previous array of cubes
         for (int i = 0; i < cubes.Length; i++) {
@@ -53,7 +54,7 @@ public class SortingVisualizer : MonoBehaviour {
                 Destroy(cubes[i]);
             }
         }
-        transform.position = new Vector3(0, 0, 0); // Reset position of Cubes gameObject
+        cubesParentGameObject.transform.position = new Vector3(0, 0, 0); // Reset position of Cubes Parent gameObject
 
         ActivateSortButtons(); // Reactivate buttons
 
@@ -87,6 +88,12 @@ public class SortingVisualizer : MonoBehaviour {
         Debug.Log("Resume");
         Time.timeScale = 1f;
         pausePanel.SetActive(false);
+    }
+
+    public void ResetProgram() {
+        Debug.Log("Reset Program");
+        ResetArray();
+        GenerateRandomArray();
     }
 
     public void ExitProgram() {
@@ -154,7 +161,6 @@ public class SortingVisualizer : MonoBehaviour {
 
                 LeanTween.moveLocalX(unsortedList[i], unsortedList[min].transform.localPosition.x, sortingSpeed);
                 LeanTween.moveLocalZ(unsortedList[i], -3, sortingSpeed / 2f).setLoopPingPong(1);
-
 
                 LeanTween.moveLocalX(unsortedList[min], tempPosition.x, sortingSpeed);
                 LeanTween.moveLocalZ(unsortedList[min], 3, sortingSpeed / 2f).setLoopPingPong(1);
