@@ -27,7 +27,6 @@ public class SortingVisualizer : MonoBehaviour {
     private int cubeHeightMin = 2;
     private int cubeHeightMax = 10;
     private float sortingSpeed = .01f;
-    private bool to2D = true;
 
     private void Start() {
         Debug.Log("Start!");
