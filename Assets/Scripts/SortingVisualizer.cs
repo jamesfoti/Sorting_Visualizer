@@ -21,28 +21,32 @@ public class SortingVisualizer : MonoBehaviour {
     public Slider speedSlider;
     public Button[] sortOptionButtons;
     public GameObject pausePanel;
+    public Camera mainCamera;
 
-    private int numberOfCubes;
+    private int numberOfCubes = 4;
+    private int cubeHeightMin = 2;
     private int cubeHeightMax = 10;
-    private float sortingSpeed;
+    private float sortingSpeed = .01f;
+    private bool to2D = true;
 
     private void Start() {
+        Debug.Log("Start!");
         GenerateRandomArray();
     }
 
     private void Update() {
         sortingSpeed = Mathf.Abs(speedSlider.value - 1f); // Sorting speed is based on UI slider
-        numberOfCubes = (int)sizeSlider.value; // Number of cubes is based on UI slider
     }
 
     public void GenerateRandomArray() {
         Debug.Log("Generate Random Array");
         ResetArray(); // Reset array incase one already exists before generating a new one!
-        
+
+        numberOfCubes = (int)sizeSlider.value; // Number of cubes is based on UI slider
         cubes = new GameObject[numberOfCubes]; 
         
         for (int i = 0; i < numberOfCubes; i++) {
-            int randomNumber = Random.Range(1, cubeHeightMax + 1);
+            int randomNumber = Random.Range(cubeHeightMin, cubeHeightMax + 1);
 
             // Experiment with the x values of cubes[i] x-scale and x-position!
             GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -85,6 +89,14 @@ public class SortingVisualizer : MonoBehaviour {
         DeactivateSortButtons();
         ChangeDisabledButtonColorToGreen(1);
         StartCoroutine(BubbleSort(cubes));
+    }
+
+    public void SwitchTo2D(bool to2D) {
+        Camera.main.orthographic = to2D;
+    }
+
+    public void SwitchTo3D(bool to3D) {
+        Camera.main.orthographic = to3D;
     }
 
     public void Pause() {
